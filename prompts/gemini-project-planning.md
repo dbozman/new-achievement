@@ -29,4 +29,3 @@ I want to use AI to help build this site, but I don't want to do it in one big-b
 ## Key adjustments along the way
 
 Let's go over step 2 again. Out of the gate, let's not have "votes" involved. I won't have the controls in place to keep a single visitor from voting multiple times. Instead, let's also track the book and chapter the quote was from.
-

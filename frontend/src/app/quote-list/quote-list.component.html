@@ -1,0 +1,38 @@
+<section class="quote-list">
+  <h2>All quotes</h2>
+
+  @if (errorMessage(); as err) {
+    <p class="error" role="alert">{{ err }}</p>
+  }
+
+  @if (quotes().length === 0 && !errorMessage()) {
+    <p class="empty">No quotes yet. Add one below.</p>
+  }
+
+  @if (quotes().length > 0) {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Character</th>
+            <th>Quote</th>
+            <th>Book</th>
+            <th>Chapter</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (q of quotes(); track q.id) {
+            <tr>
+              <td>{{ q.id }}</td>
+              <td>{{ q.character }}</td>
+              <td class="text-cell">{{ q.text }}</td>
+              <td>{{ q.bookNumber }}</td>
+              <td>{{ q.chapterNumber }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

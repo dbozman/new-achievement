@@ -6,21 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AiModule = void 0;
 const common_1 = require("@nestjs/common");
-const ai_module_1 = require("./ai/ai.module");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const prisma_module_1 = require("./prisma/prisma.module");
-const quotes_module_1 = require("./quotes/quotes.module");
-let AppModule = class AppModule {
+const ai_controller_1 = require("./ai.controller");
+const ai_service_1 = require("./ai.service");
+let AiModule = class AiModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.AiModule = AiModule;
+exports.AiModule = AiModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, quotes_module_1.QuotesModule, ai_module_1.AiModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [ai_controller_1.AiController],
+        providers: [ai_service_1.AiService],
+        exports: [ai_service_1.AiService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], AiModule);
+//# sourceMappingURL=ai.module.js.map

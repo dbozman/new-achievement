@@ -26,38 +26,12 @@
 
 .field {
   flex: 1 1 16rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.label-text {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #181d27;
-}
-
-.field input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d5d7da;
-  border-radius: 6px;
-  font: inherit;
+  min-width: 16rem;
 }
 
 .generate-btn {
-  padding: 0.5rem 1.25rem;
-  border: none;
-  border-radius: 6px;
-  background: #181d27;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
   white-space: nowrap;
-}
-
-.generate-btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+  margin-bottom: 1.25rem;
 }
 
 .error {

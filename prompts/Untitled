@@ -1,0 +1,7 @@
+In the frontend project, please install Angular Material.
+
+Set up a global Dark Theme for the entire application.
+
+Implement a monospace font across the site to make it feel like a terminals (e.g., 'Courier New' or 'Fira Code').
+
+Add an image from the Dungeon Crawler Carl universe as a semi-transparent, subtle background texture, or use a dark, rocky/metallic texture for the main application panels.

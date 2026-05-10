@@ -1,0 +1,128 @@
+.achievement-generator {
+  margin-block: 2rem 2.5rem;
+  padding-block-start: 1.5rem;
+  border-top: 1px solid #e9eaeb;
+}
+
+.achievement-generator h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hint {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  color: #535862;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.field {
+  flex: 1 1 16rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.label-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #181d27;
+}
+
+.field input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d5d7da;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.generate-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  background: #181d27;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.generate-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #b42318;
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+}
+
+/* Book-style System popup: dark slab, neon text, entrance animation */
+.achievement-reveal {
+  perspective: 800px;
+}
+
+.achievement-panel {
+  padding: 1.25rem 1.35rem;
+  border-radius: 4px;
+  background: linear-gradient(145deg, #0d0f14 0%, #050608 100%);
+  border: 1px solid #1e8f5c;
+  box-shadow:
+    0 0 0 1px rgba(30, 143, 92, 0.35),
+    0 0 24px rgba(46, 213, 115, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: achievement-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center top;
+}
+
+@keyframes achievement-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) rotateX(-8deg) translateY(12px);
+    filter: blur(4px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateX(0) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.achievement-label {
+  margin: 0 0 0.65rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: #2dd573;
+  text-shadow: 0 0 12px rgba(45, 213, 115, 0.45);
+}
+
+.achievement-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-family:
+    ui-monospace,
+    'Cascadia Code',
+    'Source Code Pro',
+    Menlo,
+    Monaco,
+    monospace;
+  color: #b8ffd9;
+  text-shadow:
+    0 0 1px rgba(184, 255, 217, 0.9),
+    0 0 18px rgba(45, 213, 115, 0.25);
+}

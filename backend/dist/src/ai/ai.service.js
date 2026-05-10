@@ -24,7 +24,7 @@ let AiService = class AiService {
             throw new common_1.ServiceUnavailableException('GEMINI_API_KEY is not set. Add it to your environment to use the AI endpoint.');
         }
         const model = this.client.getGenerativeModel({
-            model: process.env.GEMINI_MODEL ?? 'gemini-2.0-flash',
+            model: process.env.GEMINI_MODEL ?? 'gemini-2.5-flash',
             systemInstruction: SYSTEM_INSTRUCTION,
         });
         const result = await model.generateContent(trigger);

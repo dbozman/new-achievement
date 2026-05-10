@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiController = void 0;
 const common_1 = require("@nestjs/common");
+const throttler_1 = require("@nestjs/throttler");
 const ai_service_1 = require("./ai.service");
 let AiController = class AiController {
     aiService;
@@ -39,6 +40,7 @@ __decorate([
 ], AiController.prototype, "createAchievement", null);
 exports.AiController = AiController = __decorate([
     (0, common_1.Controller)('ai'),
+    (0, common_1.UseGuards)(throttler_1.ThrottlerGuard),
     __metadata("design:paramtypes", [ai_service_1.AiService])
 ], AiController);
 //# sourceMappingURL=ai.controller.js.map

@@ -1,0 +1,44 @@
+<section class="achievement-generator">
+  <h2>New achievement</h2>
+  <p class="hint">
+    Describe something you did — the System will judge you.
+  </p>
+
+  <div class="controls">
+    <label class="field">
+      <span class="label-text">What happened?</span>
+      <input
+        type="text"
+        [formControl]="trigger"
+        placeholder="e.g. I just ate a cold burrito"
+        autocomplete="off"
+        (keydown.enter)="generate()"
+      />
+    </label>
+    <button
+      type="button"
+      class="generate-btn"
+      (click)="generate()"
+      [disabled]="loading() || trigger.invalid"
+    >
+      @if (loading()) {
+        Generating…
+      } @else {
+        Generate
+      }
+    </button>
+  </div>
+
+  @if (errorMessage(); as err) {
+    <p class="error" role="alert">{{ err }}</p>
+  }
+
+  @for (row of displayRows(); track row.id) {
+    <div class="achievement-reveal" aria-live="polite">
+      <div class="achievement-panel">
+        <p class="achievement-label">SYSTEM NOTIFICATION</p>
+        <p class="achievement-text">{{ row.text }}</p>
+      </div>
+    </div>
+  }
+</section>

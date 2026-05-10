@@ -3,10 +3,13 @@ import {
   Body,
   Controller,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { AiService } from './ai.service';
 
 @Controller('ai')
+@UseGuards(ThrottlerGuard)
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 

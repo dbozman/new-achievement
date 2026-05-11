@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .quote-list {
   margin-block-end: 2rem;
 }
@@ -10,7 +12,7 @@
 }
 
 .error {
-  color: color-mix(in srgb, var(--color-pink) 88%, var(--color-shadow));
+  @include text-color-error;
   margin: 0 0 1rem;
 }
 

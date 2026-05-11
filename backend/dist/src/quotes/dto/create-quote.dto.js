@@ -9,27 +9,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AchievementDto = void 0;
+exports.CreateQuoteDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-class AchievementDto {
-    title;
-    description;
-    reward;
+class CreateQuoteDto {
+    character;
+    text;
+    bookNumber;
+    chapterNumber;
 }
-exports.AchievementDto = AchievementDto;
+exports.CreateQuoteDto = CreateQuoteDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], AchievementDto.prototype, "title", void 0);
+], CreateQuoteDto.prototype, "character", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], AchievementDto.prototype, "description", void 0);
+], CreateQuoteDto.prototype, "text", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], AchievementDto.prototype, "reward", void 0);
-//# sourceMappingURL=achievement.dto.js.map
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    __metadata("design:type", Number)
+], CreateQuoteDto.prototype, "bookNumber", void 0);
+__decorate([
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    __metadata("design:type", Number)
+], CreateQuoteDto.prototype, "chapterNumber", void 0);
+//# sourceMappingURL=create-quote.dto.js.map

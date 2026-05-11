@@ -3,3 +3,6 @@ export declare class AchievementDto {
     description: string;
     reward: string;
 }
+export type GenerateAchievementResponse = {
+    achievement: AchievementDto;
+};

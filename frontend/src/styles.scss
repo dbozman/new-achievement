@@ -1,30 +1,25 @@
 @use 'sass:map';
+@use './styles/variables' as *;
 @use '@angular/material' as mat;
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
-// Primary / accent anchored to brand hex (full M3 maps via map.merge on built-in palettes)
-$pink: #d81b60;
-$yellow: #ffca28;
-$dark-wood: #37474f;
-$shadow: #1a1a1a;
-
 $primary-palette: map.merge(
   mat.$rose-palette,
   (
-    20: $yellow,
-    40: $pink,
-    80: $pink,
+    20: $terminal-yellow,
+    40: $system-pink,
+    80: $system-pink,
   )
 );
 
 $tertiary-palette: map.merge(
   mat.$orange-palette,
   (
-    20: $shadow,
-    40: $yellow,
-    80: $yellow,
+    20: $shadow-charcoal,
+    40: $terminal-yellow,
+    80: $terminal-yellow,
   )
 );
 
@@ -38,8 +33,8 @@ html {
         tertiary: $tertiary-palette,
       ),
       typography: (
-        plain-family: ('Fira Code', 'Courier New', Courier, monospace),
-        brand-family: ('Fira Code', 'Courier New', Courier, monospace),
+        plain-family: $font-stack-mono,
+        brand-family: $font-stack-mono,
       ),
       density: 0,
     )
@@ -48,10 +43,10 @@ html {
 
 :root {
   color-scheme: dark;
-  --color-pink: #{$pink};
-  --color-yellow: #{$yellow};
+  --color-pink: #{$system-pink};
+  --color-yellow: #{$terminal-yellow};
   --color-dark-wood: #{$dark-wood};
-  --color-shadow: #{$shadow};
+  --color-shadow: #{$shadow-charcoal};
   --color-text: color-mix(in srgb, var(--color-yellow) 88%, white);
   --color-text-muted: color-mix(in srgb, var(--color-yellow) 45%, var(--color-dark-wood));
   --color-surface: color-mix(in srgb, var(--color-dark-wood) 82%, var(--color-shadow));
@@ -75,11 +70,7 @@ body {
     ),
     linear-gradient(155deg, var(--color-shadow) 0%, var(--color-dark-wood) 55%, var(--color-shadow) 100%);
   color: var(--color-text);
-  font-family:
-    'Fira Code',
-    'Courier New',
-    Courier,
-    monospace;
+  font-family: $font-stack-mono;
 }
 
 body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
@@ -99,7 +90,7 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
 
 .dcc-sign-board {
   background-color: $dark-wood;
-  border: 12px solid $pink;
+  border: 12px solid $system-pink;
   border-radius: 20px;
   padding: 30px 50px;
   display: flex;
@@ -107,7 +98,7 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   align-items: center;
   gap: 10px;
   /* Adds a subtle wood grain/noise texture if desired, but solid looks cleaner */
-  box-shadow: 10px 10px 0px rgba(0,0,0,0.5); 
+  box-shadow: 10px 10px 0px $sign-board-drop-shadow;
 }
 
 .top-row {
@@ -121,11 +112,11 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   width: 80px;
   height: 80px;
   /* 3D drop shadow on the SVGs to match the text */
-  filter: drop-shadow(4px 4px 0px $shadow) drop-shadow(6px 6px 0px $shadow);
+  @include filter-sign-icon-shadow;
 }
 
 .pink-svg {
-  color: $pink;
+  color: $system-pink;
 }
 
 .bomb {
@@ -133,33 +124,23 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
 }
 
 .word-new {
-  font-family: 'Luckiest Guy', cursive;
+  font-family: $font-stack-display;
   font-size: 100px;
-  color: $yellow;
+  color: $terminal-yellow;
   line-height: 1;
   letter-spacing: 5px;
   /* The Secret Sauce: Stacking text shadows to create physical 3D depth */
-  text-shadow: 
-    2px 2px 0 $shadow,
-    4px 4px 0 $shadow,
-    6px 6px 0 $shadow,
-    8px 8px 0 $shadow,
-    10px 10px 0 $shadow;
+  @include text-shadow-stacked-deep;
   transform: rotate(-3deg); /* Slight tilt for chaos */
 }
 
 .bottom-row {
-  font-family: 'Luckiest Guy', cursive;
+  font-family: $font-stack-display;
   font-size: 110px;
-  color: $yellow;
+  color: $terminal-yellow;
   line-height: 1;
   letter-spacing: 2px;
-  text-shadow: 
-    2px 2px 0 $shadow,
-    4px 4px 0 $shadow,
-    6px 6px 0 $shadow,
-    8px 8px 0 $shadow,
-    10px 10px 0 $shadow;
+  @include text-shadow-stacked-deep;
 }
 
 /* The Eyeball logic */
@@ -175,20 +156,20 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
-  background-color: $pink;
+  background-color: $system-pink;
   border-radius: 50%;
-  border: 3px solid $shadow;
+  border: 3px solid $shadow-charcoal;
   display: flex;
   justify-content: center;
   align-items: center;
   /* Override the text shadow so the eyeball sits flat on the A */
-  text-shadow: none; 
+  text-shadow: none;
 }
 
 .pupil {
   width: 8px;
   height: 8px;
-  background-color: $shadow;
+  background-color: $shadow-charcoal;
   border-radius: 50%;
 }
 
@@ -196,7 +177,7 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
 /* Assuming your .achievement-panel already has the dark background and pink border */
 
 .achievement-label {
-  color: $pink; /* System Pink */
+  color: $system-pink; /* System Pink */
   font-weight: bold;
   letter-spacing: 2px;
   margin-bottom: 15px;
@@ -206,25 +187,25 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #ffffff; /* White title stands out against the yellow body text */
+  color: $surface-bright; /* White title stands out against the yellow body text */
 }
 
 .achievement-description {
   font-size: 1.1rem;
   line-height: 1.5;
-  color: $yellow; /* Terminal Yellow */
+  color: $terminal-yellow; /* Terminal Yellow */
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px dashed $pink; /* The visual divider */
+  border-bottom: 1px dashed $system-pink; /* The visual divider */
 }
 
 .achievement-reward {
   font-size: 1.2rem;
-  color: $yellow;
+  color: $terminal-yellow;
   margin-bottom: 25px;
-  
+
   .reward-label {
-    color: $pink; /* Make the 'Reward:' text pink */
+    color: $system-pink; /* Make the 'Reward:' text pink */
     font-weight: bold;
     text-transform: uppercase;
   }

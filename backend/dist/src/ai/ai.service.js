@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiService = void 0;
 const common_1 = require("@nestjs/common");
 const generative_ai_1 = require("@google/generative-ai");
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+const achievement_dto_1 = require("./dto/achievement.dto");
 const SYSTEM_INSTRUCTION = `You are the System AI from the Dungeon Crawler Carl universe. You are unhinged, deeply snarky, condescending, obsessed with efficiency (and occasionally very specific foot aesthetics), and you view humans (Crawlers) as pathetic, squishy, mildly amusing meat-sacks. 
 
 Your goal is to issue a "New Achievement" based on a user-provided trigger or action. You must aggressively mock the user's trivial accomplishment, highlight their cosmic insignificance, and offer a completely useless, passive-aggressive, or dangerously inappropriate reward.
@@ -65,22 +68,19 @@ let AiService = class AiService {
         const result = await model.generateContent(trigger);
         const text = result.response.text().trim();
         const cleaned = text.replace(/^```json\s*|\s*```$/g, '').trim();
+        let parsed;
         try {
-            const parsed = JSON.parse(cleaned);
-            if (typeof parsed.title !== 'string' ||
-                typeof parsed.description !== 'string' ||
-                typeof parsed.reward !== 'string') {
-                throw new Error('Invalid schema');
-            }
-            return {
-                title: parsed.title,
-                description: parsed.description,
-                reward: parsed.reward,
-            };
+            parsed = JSON.parse(cleaned);
         }
         catch {
             throw new common_1.BadGatewayException('AI response was not valid achievement JSON.');
         }
+        const dto = (0, class_transformer_1.plainToInstance)(achievement_dto_1.AchievementDto, parsed);
+        const errors = (0, class_validator_1.validateSync)(dto);
+        if (errors.length > 0) {
+            throw new common_1.BadGatewayException('AI response was not valid achievement JSON.');
+        }
+        return dto;
     }
 };
 exports.AiService = AiService;

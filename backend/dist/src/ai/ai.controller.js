@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiController = void 0;
 const common_1 = require("@nestjs/common");
 const throttler_1 = require("@nestjs/throttler");
+const generate_achievement_dto_1 = require("./dto/generate-achievement.dto");
 const ai_service_1 = require("./ai.service");
 let AiController = class AiController {
     aiService;
@@ -22,11 +23,7 @@ let AiController = class AiController {
         this.aiService = aiService;
     }
     async createAchievement(body) {
-        const trigger = body?.trigger?.trim();
-        if (!trigger) {
-            throw new common_1.BadRequestException('trigger is required (non-empty string)');
-        }
-        const achievement = await this.aiService.generateAchievement(trigger);
+        const achievement = await this.aiService.generateAchievement(body.trigger);
         return { achievement };
     }
 };
@@ -35,7 +32,7 @@ __decorate([
     (0, common_1.Post)('achievement'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [generate_achievement_dto_1.GenerateAchievementDto]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "createAchievement", null);
 exports.AiController = AiController = __decorate([

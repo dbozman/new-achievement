@@ -9,27 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AchievementDto = void 0;
+exports.GenerateAchievementDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-class AchievementDto {
-    title;
-    description;
-    reward;
+class GenerateAchievementDto {
+    trigger;
 }
-exports.AchievementDto = AchievementDto;
+exports.GenerateAchievementDto = GenerateAchievementDto;
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => typeof value === 'string' ? value.trim() : value),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'trigger is required (non-empty string)' }),
     __metadata("design:type", String)
-], AchievementDto.prototype, "title", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], AchievementDto.prototype, "description", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], AchievementDto.prototype, "reward", void 0);
-//# sourceMappingURL=achievement.dto.js.map
+], GenerateAchievementDto.prototype, "trigger", void 0);
+//# sourceMappingURL=generate-achievement.dto.js.map

@@ -4,6 +4,8 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { plainToInstance } from 'class-transformer';
+import { validateSync } from 'class-validator';
 import { AchievementDto } from './dto/achievement.dto';
 
 // const SYSTEM_INSTRUCTION = `You are the System AI from Dungeon Crawler Carl. You are unhinged, snarky, obsessed with efficiency (and occasionally feet), and you hate the Crawlers. Your goal is to issue a New Achievement based on a user-provided prompt. The format must always be: New Achievement! [Name of Achievement]. [Description]. Reward: [Sarcastic Reward].`;
@@ -87,26 +89,23 @@ export class AiService {
     const text = result.response.text().trim();
     const cleaned = text.replace(/^```json\s*|\s*```$/g, '').trim();
 
+    let parsed: unknown;
     try {
-      const parsed = JSON.parse(cleaned) as Partial<AchievementDto>;
-
-      if (
-        typeof parsed.title !== 'string' ||
-        typeof parsed.description !== 'string' ||
-        typeof parsed.reward !== 'string'
-      ) {
-        throw new Error('Invalid schema');
-      }
-
-      return {
-        title: parsed.title,
-        description: parsed.description,
-        reward: parsed.reward,
-      };
+      parsed = JSON.parse(cleaned);
     } catch {
       throw new BadGatewayException(
         'AI response was not valid achievement JSON.',
       );
     }
+
+    const dto = plainToInstance(AchievementDto, parsed);
+    const errors = validateSync(dto);
+    if (errors.length > 0) {
+      throw new BadGatewayException(
+        'AI response was not valid achievement JSON.',
+      );
+    }
+
+    return dto;
   }
 }

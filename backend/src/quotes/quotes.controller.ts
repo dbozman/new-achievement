@@ -5,8 +5,8 @@ import {
   NotFoundException,
   Post,
 } from '@nestjs/common';
+import { CreateQuoteDto } from './dto/create-quote.dto';
 import { QuotesService } from './quotes.service';
-import type { CreateQuoteInput } from './quotes.service';
 
 @Controller('quotes')
 export class QuotesController {
@@ -29,7 +29,7 @@ export class QuotesController {
   }
 
   @Post()
-  createQuote(@Body() body: CreateQuoteInput) {
+  createQuote(@Body() body: CreateQuoteDto) {
     return this.quotesService.create(body);
   }
 }

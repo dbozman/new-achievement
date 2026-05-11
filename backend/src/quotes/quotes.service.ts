@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-
-export type CreateQuoteInput = {
-  character: string;
-  text: string;
-  bookNumber: number;
-  chapterNumber: number;
-};
+import { CreateQuoteDto } from './dto/create-quote.dto';
 
 @Injectable()
 export class QuotesService {
@@ -34,7 +28,7 @@ export class QuotesService {
     return quote;
   }
 
-  create(data: CreateQuoteInput) {
+  create(data: CreateQuoteDto) {
     return this.prisma.quote.create({
       data,
     });

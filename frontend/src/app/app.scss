@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .app-shell {
   box-sizing: border-box;
   max-width: 960px;
@@ -32,7 +34,5 @@
   font-weight: 600;
   color: var(--color-yellow);
   letter-spacing: 0.03em;
-  text-shadow:
-    2px 2px 0 var(--color-shadow),
-    4px 4px 0 color-mix(in srgb, var(--color-shadow) 70%, transparent);
+  @include text-shadow-app-heading;
 }

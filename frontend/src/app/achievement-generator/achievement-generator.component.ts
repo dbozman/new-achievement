@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { Achievement } from '../achievement.model';
 import { AchievementService } from '../achievement.service';
 
 @Component({
@@ -29,9 +30,10 @@ export class AchievementGeneratorComponent {
   protected readonly errorMessage = signal<string | null>(null);
 
   /** Each successful response gets a new id so the panel DOM is recreated and CSS animation replays. */
-  protected readonly display = signal<{ id: number; text: string } | null>(
-    null,
-  );
+  protected readonly display = signal<{
+    id: number;
+    achievement: Achievement;
+  } | null>(null);
 
   protected readonly displayRows = computed(() => {
     const d = this.display();
@@ -67,7 +69,7 @@ export class AchievementGeneratorComponent {
         this.trigger.reset('');
         this.display.set({
           id: ++AchievementGeneratorComponent.nextDisplayId,
-          text: res.achievement,
+          achievement: res,
         });
       },
       error: () => {

@@ -1,12 +1,50 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
-@import '@angular/material/prebuilt-themes/purple-green.css';
 
-// Primary palette — use across the app (see :root tokens below)
+// Primary / accent anchored to brand hex (full M3 maps via map.merge on built-in palettes)
 $pink: #d81b60;
 $yellow: #ffca28;
 $dark-wood: #37474f;
 $shadow: #1a1a1a;
+
+$primary-palette: map.merge(
+  mat.$rose-palette,
+  (
+    20: $yellow,
+    40: $pink,
+    80: $pink,
+  )
+);
+
+$tertiary-palette: map.merge(
+  mat.$orange-palette,
+  (
+    20: $shadow,
+    40: $yellow,
+    80: $yellow,
+  )
+);
+
+html {
+  color-scheme: dark;
+  @include mat.theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: $primary-palette,
+        tertiary: $tertiary-palette,
+      ),
+      typography: (
+        plain-family: ('Fira Code', 'Courier New', Courier, monospace),
+        brand-family: ('Fira Code', 'Courier New', Courier, monospace),
+      ),
+      density: 0,
+    )
+  );
+}
 
 :root {
   color-scheme: dark;
@@ -50,19 +88,6 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   user-select: none;
   transition: filter 220ms ease;
 }
-
-/* Nudge Material outline fields toward the four-color palette */
-.mat-mdc-form-field {
-  --mat-form-field-outlined-outline-color: var(--color-border);
-  --mat-form-field-outlined-focus-outline-color: var(--color-pink);
-  --mat-form-field-outlined-hover-outline-color: color-mix(in srgb, var(--color-pink) 55%, var(--color-dark-wood));
-}
-
-.mat-mdc-raised-button.mat-primary {
-  --mdc-filled-button-container-color: color-mix(in srgb, var(--color-pink) 75%, var(--color-shadow));
-  --mdc-filled-button-label-text-color: var(--color-yellow);
-}
-
 
 // banner
 
@@ -165,4 +190,42 @@ body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
   height: 8px;
   background-color: $shadow;
   border-radius: 50%;
+}
+
+/* achievement generator styles */
+/* Assuming your .achievement-panel already has the dark background and pink border */
+
+.achievement-label {
+  color: $pink; /* System Pink */
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.achievement-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ffffff; /* White title stands out against the yellow body text */
+}
+
+.achievement-description {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: $yellow; /* Terminal Yellow */
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed $pink; /* The visual divider */
+}
+
+.achievement-reward {
+  font-size: 1.2rem;
+  color: $yellow;
+  margin-bottom: 25px;
+  
+  .reward-label {
+    color: $pink; /* Make the 'Reward:' text pink */
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 }

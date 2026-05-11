@@ -1,9 +1,3 @@
-.achievement-generator {
-  margin-block: 2rem 2.5rem;
-  padding-block-start: 1.5rem;
-  border-top: 1px solid var(--color-border);
-}
-
 .achievement-generator h2 {
   margin: 0 0 0.35rem;
   font-size: 1.25rem;
@@ -138,22 +132,39 @@
     2px 2px 0 var(--color-shadow);
 }
 
-.achievement-text {
-  margin: 0;
+.achievement-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--color-yellow);
+  text-shadow:
+    0 0 1px color-mix(in srgb, var(--color-yellow) 30%, transparent),
+    2px 2px 0 var(--color-shadow);
+}
+
+.achievement-description {
+  margin: 0 0 1rem;
   font-size: 1.05rem;
   line-height: 1.45;
-  font-family:
-    ui-monospace,
-    'Cascadia Code',
-    'Source Code Pro',
-    Menlo,
-    Monaco,
-    monospace;
   color: var(--color-text);
   text-shadow:
     0 0 1px color-mix(in srgb, var(--color-yellow) 30%, transparent),
     0 0 14px color-mix(in srgb, var(--color-pink) 18%, transparent);
   white-space: pre-wrap;
+}
+
+.achievement-reward {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.reward-label {
+  font-weight: 700;
+  color: var(--color-pink);
+  margin-inline-end: 0.35rem;
 }
 
 .actions {

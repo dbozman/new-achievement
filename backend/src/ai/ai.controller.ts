@@ -6,6 +6,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { AchievementDto } from './dto/achievement.dto';
 import { AiService } from './ai.service';
 
 @Controller('ai')
@@ -16,7 +17,7 @@ export class AiController {
   @Post('achievement')
   async createAchievement(
     @Body() body: { trigger?: string },
-  ): Promise<{ achievement: string }> {
+  ): Promise<{ achievement: AchievementDto }> {
     const trigger = body?.trigger?.trim();
     if (!trigger) {
       throw new BadRequestException('trigger is required (non-empty string)');

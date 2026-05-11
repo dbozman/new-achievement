@@ -1,3 +1,4 @@
+import { AchievementDto } from './dto/achievement.dto';
 import { AiService } from './ai.service';
 export declare class AiController {
     private readonly aiService;
@@ -5,6 +6,6 @@ export declare class AiController {
     createAchievement(body: {
         trigger?: string;
     }): Promise<{
-        achievement: string;
+        achievement: AchievementDto;
     }>;
 }

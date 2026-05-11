@@ -1,8 +1,8 @@
 <main class="app-shell">
-  <h1>Quotes</h1>
-
+  
   <app-achievement-generator />
 
+  <h1>Quotes</h1>
   <app-quote-list #quoteList />
 
   <app-add-quote (quoteAdded)="quoteList.refresh()" />

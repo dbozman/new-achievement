@@ -14,6 +14,6 @@ import { QuoteListComponent } from './quote-list/quote-list.component';
     AchievementGeneratorComponent,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App {}

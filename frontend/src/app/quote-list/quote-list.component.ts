@@ -9,7 +9,7 @@ import { Quote, QuoteService } from '../quote.service';
   standalone: true,
   imports: [MatTableModule, MatCardModule],
   templateUrl: './quote-list.component.html',
-  styleUrl: './quote-list.component.css',
+  styleUrl: './quote-list.component.scss',
 })
 export class QuoteListComponent implements OnInit {
   private readonly quoteService = inject(QuoteService);

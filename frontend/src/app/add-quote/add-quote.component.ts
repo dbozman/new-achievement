@@ -15,7 +15,7 @@ import { QuoteService } from '../quote.service';
   standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './add-quote.component.html',
-  styleUrl: './add-quote.component.css',
+  styleUrl: './add-quote.component.scss',
 })
 export class AddQuoteComponent {
   private readonly fb = inject(NonNullableFormBuilder);

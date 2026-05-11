@@ -12,7 +12,7 @@ import { AchievementService } from '../achievement.service';
   standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './achievement-generator.component.html',
-  styleUrl: './achievement-generator.component.css',
+  styleUrl: './achievement-generator.component.scss',
 })
 export class AchievementGeneratorComponent {
   private readonly achievementService = inject(AchievementService);

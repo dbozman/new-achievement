@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+$pink: #d81b60;
+$yellow: #ffca28;
+$dark-wood: #37474f;
+$shadow: #1a1a1a;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(61, 71, 66, 0.18), transparent 40%),
+    radial-gradient(circle at 88% 90%, rgba(56, 48, 72, 0.2), transparent 42%),
+    linear-gradient(135deg, #0b0d11 0%, #151922 100%);
+  color: #d4d7dd;
+  font-family:
+    'Fira Code',
+    'Courier New',
+    Courier,
+    monospace;
+}
+
+body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
+  filter: blur(4px) grayscale(0.7) brightness(0.75);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 220ms ease;
+}
+
+
+// banner
+
+/* Import a chunky, aggressive font to mimic the cut wood */
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+.dcc-sign-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.dcc-sign-board {
+  background-color: $dark-wood;
+  border: 12px solid $pink;
+  border-radius: 20px;
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  /* Adds a subtle wood grain/noise texture if desired, but solid looks cleaner */
+  box-shadow: 10px 10px 0px rgba(0,0,0,0.5); 
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 100%;
+}
+
+.sign-icon {
+  width: 80px;
+  height: 80px;
+  /* 3D drop shadow on the SVGs to match the text */
+  filter: drop-shadow(4px 4px 0px $shadow) drop-shadow(6px 6px 0px $shadow);
+}
+
+.pink-svg {
+  color: $pink;
+}
+
+.bomb {
+  transform: rotate(15deg);
+}
+
+.word-new {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 100px;
+  color: $yellow;
+  line-height: 1;
+  letter-spacing: 5px;
+  /* The Secret Sauce: Stacking text shadows to create physical 3D depth */
+  text-shadow: 
+    2px 2px 0 $shadow,
+    4px 4px 0 $shadow,
+    6px 6px 0 $shadow,
+    8px 8px 0 $shadow,
+    10px 10px 0 $shadow;
+  transform: rotate(-3deg); /* Slight tilt for chaos */
+}
+
+.bottom-row {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 110px;
+  color: $yellow;
+  line-height: 1;
+  letter-spacing: 2px;
+  text-shadow: 
+    2px 2px 0 $shadow,
+    4px 4px 0 $shadow,
+    6px 6px 0 $shadow,
+    8px 8px 0 $shadow,
+    10px 10px 0 $shadow;
+}
+
+/* The Eyeball logic */
+.letter-a {
+  position: relative;
+  display: inline-block;
+}
+
+.eyeball {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background-color: $pink;
+  border-radius: 50%;
+  border: 3px solid $shadow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Override the text shadow so the eyeball sits flat on the A */
+  text-shadow: none; 
+}
+
+.pupil {
+  width: 8px;
+  height: 8px;
+  background-color: $shadow;
+  border-radius: 50%;
+}

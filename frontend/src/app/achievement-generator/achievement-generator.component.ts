@@ -64,6 +64,7 @@ export class AchievementGeneratorComponent {
     this.achievementService.generateAchievement(raw).subscribe({
       next: (res) => {
         this.loading.set(false);
+        this.trigger.reset('');
         this.display.set({
           id: ++AchievementGeneratorComponent.nextDisplayId,
           text: res.achievement,

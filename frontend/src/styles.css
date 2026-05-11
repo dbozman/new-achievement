@@ -20,3 +20,10 @@ body {
     Courier,
     monospace;
 }
+
+body.achievement-overlay-active .app-shell > *:not(app-achievement-generator) {
+  filter: blur(4px) grayscale(0.7) brightness(0.75);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 220ms ease;
+}

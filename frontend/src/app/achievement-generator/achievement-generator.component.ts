@@ -1,4 +1,5 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +16,8 @@ import { AchievementService } from '../achievement.service';
 })
 export class AchievementGeneratorComponent {
   private readonly achievementService = inject(AchievementService);
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   private static nextDisplayId = 0;
 
   protected readonly trigger = new FormControl('', {
@@ -34,6 +37,19 @@ export class AchievementGeneratorComponent {
     const d = this.display();
     return d ? [d] : [];
   });
+
+  protected readonly isDisplaying = computed(() => this.display() !== null);
+
+  constructor() {
+    effect(() => {
+      const active = this.isDisplaying();
+      this.document.body.classList.toggle('achievement-overlay-active', active);
+    });
+
+    this.destroyRef.onDestroy(() => {
+      this.document.body.classList.remove('achievement-overlay-active');
+    });
+  }
 
   protected generate(): void {
     const raw = this.trigger.value.trim();
@@ -60,5 +76,9 @@ export class AchievementGeneratorComponent {
         );
       },
     });
+  }
+
+  protected dismiss(): void {
+    this.display.set(null);
   }
 }

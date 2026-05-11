@@ -37,10 +37,14 @@
   }
 
   @for (row of displayRows(); track row.id) {
-    <div class="achievement-reveal" aria-live="polite">
+    <div class="achievement-reveal" aria-live="polite" role="dialog" aria-modal="true">
+      <div class="glitch-flash"></div>
       <div class="achievement-panel">
         <p class="achievement-label">SYSTEM NOTIFICATION</p>
         <p class="achievement-text">{{ row.text }}</p>
+        <div class="actions">
+          <button mat-raised-button color="warn" (click)="dismiss()">Dismiss</button>
+        </div>
       </div>
     </div>
   }

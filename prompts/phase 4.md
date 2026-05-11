@@ -1,6 +1,7 @@
 # Phase 4
 
 ## Make it look pretty - install material
+
 In the frontend project, please install Angular Material.
 
 1. Set up a global Dark Theme for the entire application.

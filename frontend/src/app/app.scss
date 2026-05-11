@@ -3,22 +3,36 @@
   max-width: 960px;
   margin: 1rem auto 2rem;
   padding: 1.5rem 1rem 3rem;
-  border: 1px solid rgba(157, 165, 181, 0.18);
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   background:
-    linear-gradient(rgba(5, 8, 10, 0.74), rgba(5, 8, 10, 0.74)),
-    radial-gradient(circle at 20% 20%, rgba(93, 98, 105, 0.2), transparent 35%),
-    radial-gradient(circle at 75% 80%, rgba(72, 82, 95, 0.18), transparent 42%),
-    linear-gradient(155deg, #151a22 0%, #0f1319 100%);
+    linear-gradient(
+      color-mix(in srgb, var(--color-shadow) 78%, transparent),
+      color-mix(in srgb, var(--color-shadow) 78%, transparent)
+    ),
+    radial-gradient(
+      circle at 18% 22%,
+      color-mix(in srgb, var(--color-pink) 12%, transparent),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 78% 78%,
+      color-mix(in srgb, var(--color-yellow) 8%, transparent),
+      transparent 40%
+    ),
+    linear-gradient(160deg, var(--color-surface) 0%, var(--color-shadow) 100%);
   box-shadow:
-    0 14px 38px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    8px 8px 0 color-mix(in srgb, var(--color-shadow) 85%, black),
+    inset 0 1px 0 color-mix(in srgb, var(--color-yellow) 12%, transparent);
 }
 
 .app-shell h1 {
   margin: 0 0 1.5rem;
   font-size: 1.75rem;
   font-weight: 600;
-  color: #e8eaef;
+  color: var(--color-yellow);
   letter-spacing: 0.03em;
+  text-shadow:
+    2px 2px 0 var(--color-shadow),
+    4px 4px 0 color-mix(in srgb, var(--color-shadow) 70%, transparent);
 }

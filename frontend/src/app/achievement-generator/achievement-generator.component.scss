@@ -1,19 +1,20 @@
 .achievement-generator {
   margin-block: 2rem 2.5rem;
   padding-block-start: 1.5rem;
-  border-top: 1px solid #e9eaeb;
+  border-top: 1px solid var(--color-border);
 }
 
 .achievement-generator h2 {
   margin: 0 0 0.35rem;
   font-size: 1.25rem;
   font-weight: 600;
+  color: var(--color-yellow);
 }
 
 .hint {
   margin: 0 0 1.25rem;
   font-size: 0.875rem;
-  color: #535862;
+  color: var(--color-text-muted);
 }
 
 .controls {
@@ -35,7 +36,7 @@
 }
 
 .error {
-  color: #b42318;
+  color: color-mix(in srgb, var(--color-pink) 88%, var(--color-shadow));
   font-size: 0.875rem;
   margin: 0 0 1rem;
 }
@@ -49,7 +50,7 @@
   place-items: center;
   padding: 1rem;
   perspective: 800px;
-  background: rgba(1, 2, 5, 0.62);
+  background: color-mix(in srgb, var(--color-shadow) 78%, transparent);
   backdrop-filter: blur(3px);
 }
 
@@ -60,10 +61,14 @@
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(255, 65, 65, 0.2) 0 2px,
-      rgba(255, 65, 65, 0) 2px 4px
+      color-mix(in srgb, var(--color-pink) 35%, transparent) 0 2px,
+      transparent 2px 4px
     ),
-    radial-gradient(circle at center, rgba(255, 40, 40, 0.45), transparent 60%);
+    radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--color-pink) 55%, transparent),
+      transparent 60%
+    );
   mix-blend-mode: screen;
   animation: static-flash 520ms ease-out forwards;
 }
@@ -73,12 +78,16 @@
   width: min(760px, calc(100vw - 2rem));
   padding: 1.25rem 1.35rem;
   border-radius: 4px;
-  background: linear-gradient(145deg, #0d0f14 0%, #050608 100%);
-  border: 1px solid #1e8f5c;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--color-dark-wood) 55%, var(--color-shadow)),
+    var(--color-shadow)
+  );
+  border: 2px solid color-mix(in srgb, var(--color-pink) 65%, var(--color-dark-wood));
   box-shadow:
-    0 0 0 1px rgba(30, 143, 92, 0.35),
-    0 0 24px rgba(46, 213, 115, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 0 0 1px color-mix(in srgb, var(--color-pink) 30%, transparent),
+    0 0 28px color-mix(in srgb, var(--color-pink) 15%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-yellow) 10%, transparent);
   animation: achievement-pop 620ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
   transform-origin: center top;
 }
@@ -123,8 +132,10 @@
   font-size: 0.65rem;
   letter-spacing: 0.22em;
   font-weight: 700;
-  color: #2dd573;
-  text-shadow: 0 0 12px rgba(45, 213, 115, 0.45);
+  color: var(--color-yellow);
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--color-pink) 40%, transparent),
+    2px 2px 0 var(--color-shadow);
 }
 
 .achievement-text {
@@ -138,10 +149,10 @@
     Menlo,
     Monaco,
     monospace;
-  color: #b8ffd9;
+  color: var(--color-text);
   text-shadow:
-    0 0 1px rgba(184, 255, 217, 0.9),
-    0 0 18px rgba(45, 213, 115, 0.25);
+    0 0 1px color-mix(in srgb, var(--color-yellow) 30%, transparent),
+    0 0 14px color-mix(in srgb, var(--color-pink) 18%, transparent);
   white-space: pre-wrap;
 }
 

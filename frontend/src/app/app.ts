@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
-import { AchievementGeneratorComponent } from './achievement-generator/achievement-generator.component';
-import { AddQuoteComponent } from './add-quote/add-quote.component';
-import { QuoteListComponent } from './quote-list/quote-list.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    QuoteListComponent,
-    AddQuoteComponent,
-    AchievementGeneratorComponent,
+    RouterLink,
+    RouterLinkActive,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {}

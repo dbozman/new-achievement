@@ -1,11 +1,19 @@
 <main class="app-shell">
-  
-  <app-achievement-generator />
-
-  <h1>Quotes</h1>
-  <app-quote-list #quoteList />
-
-  <app-add-quote (quoteAdded)="quoteList.refresh()" />
+  <mat-toolbar class="app-nav-toolbar" role="navigation">
+    <nav class="app-nav">
+      <a
+        mat-button
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        System Interface
+      </a>
+      <a mat-button routerLink="/quotes" routerLinkActive="is-active">
+        Crawler Quotes
+      </a>
+    </nav>
+  </mat-toolbar>
 
   <router-outlet />
 </main>

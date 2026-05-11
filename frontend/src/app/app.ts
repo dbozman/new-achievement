@@ -7,9 +7,12 @@ import {
   RouterOutlet,
 } from '@angular/router';
 
+import { BannerComponent } from './banner/banner';
+
 @Component({
   selector: 'app-root',
   imports: [
+    BannerComponent,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,

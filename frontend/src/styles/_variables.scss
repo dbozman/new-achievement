@@ -1,0 +1,49 @@
+// === Brand palette (hex) ===
+// System pink — primary brand / Material primary anchor
+$system-pink: #d81b60;
+// Terminal yellow — body/accent (app uses #ffca28; #ffb300 is a common alternate amber)
+$terminal-yellow: #ffca28;
+$dark-wood: #37474f;
+$shadow-charcoal: #1a1a1a;
+$surface-bright: #ffffff;
+$sign-board-drop-shadow: rgba(0, 0, 0, 0.5);
+
+// === Typography ===
+$font-stack-mono: (
+  'Fira Code',
+  'Courier New',
+  Courier,
+  monospace,
+);
+$font-stack-display: (
+  'Luckiest Guy',
+  cursive,
+);
+
+// === Sign / banner: stacked “3D” text shadow ===
+@mixin text-shadow-stacked-deep($depth-color: $shadow-charcoal) {
+  text-shadow:
+    2px 2px 0 $depth-color,
+    4px 4px 0 $depth-color,
+    6px 6px 0 $depth-color,
+    8px 8px 0 $depth-color,
+    10px 10px 0 $depth-color;
+}
+
+// === App shell heading: lighter embossed stack (uses CSS variables) ===
+@mixin text-shadow-app-heading {
+  text-shadow:
+    2px 2px 0 var(--color-shadow),
+    4px 4px 0 color-mix(in srgb, var(--color-shadow) 70%, transparent);
+}
+
+// === Sign icons: doubled drop-shadow to match lettering ===
+@mixin filter-sign-icon-shadow($depth-color: $shadow-charcoal) {
+  filter: drop-shadow(4px 4px 0px #{$depth-color})
+    drop-shadow(6px 6px 0px #{$depth-color});
+}
+
+// === Shared UI (uses CSS variables from :root) ===
+@mixin text-color-error {
+  color: color-mix(in srgb, var(--color-pink) 88%, var(--color-shadow));
+}

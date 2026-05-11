@@ -4,10 +4,13 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { environment } from '../environments/environment';
 
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
   let httpMock: HttpTestingController;
@@ -15,7 +18,11 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter(routes),
+      ],
     }).compileComponents();
 
     httpMock = TestBed.inject(HttpTestingController);
@@ -31,8 +38,11 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render quotes heading', async () => {
+  it('should render quotes heading when on /quotes', async () => {
     const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+    fixture.detectChanges();
+    await router.navigateByUrl('/quotes');
     fixture.detectChanges();
     httpMock.expectOne(`${environment.apiUrl}/quotes`).flush([]);
     await fixture.whenStable();

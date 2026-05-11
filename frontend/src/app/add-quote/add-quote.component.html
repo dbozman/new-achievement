@@ -2,31 +2,39 @@
   <h2>Add a quote</h2>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label class="field">
-      <span>Character</span>
-      <input type="text" formControlName="character" autocomplete="off" />
-    </label>
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Character</mat-label>
+      <input matInput type="text" formControlName="character" autocomplete="off" />
+    </mat-form-field>
 
-    <label class="field">
-      <span>Quote</span>
-      <textarea formControlName="text" rows="4"></textarea>
-    </label>
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Quote</mat-label>
+      <textarea matInput formControlName="text" rows="4"></textarea>
+    </mat-form-field>
 
     <div class="row">
-      <label class="field">
-        <span>Book #</span>
-        <input type="number" formControlName="bookNumber" min="1" />
-      </label>
-      <label class="field">
-        <span>Chapter #</span>
-        <input type="number" formControlName="chapterNumber" min="1" />
-      </label>
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Book #</mat-label>
+        <input matInput type="number" formControlName="bookNumber" min="1" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Chapter #</mat-label>
+        <input matInput type="number" formControlName="chapterNumber" min="1" />
+      </mat-form-field>
     </div>
 
     @if (submitError) {
       <p class="error" role="alert">Could not save quote. Try again.</p>
     }
 
-    <button type="submit" [disabled]="form.invalid">Add quote</button>
+    <button
+      mat-raised-button
+      type="submit"
+      color="warn"
+      class="system-btn"
+      [disabled]="form.invalid"
+    >
+      Add quote
+    </button>
   </form>
 </section>

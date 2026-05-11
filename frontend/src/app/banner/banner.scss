@@ -1,0 +1,91 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+}
+
+.dcc-sign-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.dcc-sign-board {
+  background-color: $dark-wood;
+  border: 12px solid $system-pink;
+  border-radius: 20px;
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 10px 10px 0px $sign-board-drop-shadow;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.sign-icon {
+  width: 80px;
+  height: 80px;
+  @include filter-sign-icon-shadow;
+}
+
+.pink-svg {
+  color: $system-pink;
+}
+
+.bomb {
+  transform: rotate(15deg);
+}
+
+.word-new {
+  font-family: $font-stack-display;
+  font-size: 100px;
+  color: $terminal-yellow;
+  line-height: 1;
+  letter-spacing: 5px;
+  @include text-shadow-stacked-deep;
+  transform: rotate(-3deg);
+}
+
+.bottom-row {
+  font-family: $font-stack-display;
+  font-size: 110px;
+  color: $terminal-yellow;
+  line-height: 1;
+  letter-spacing: 2px;
+  @include text-shadow-stacked-deep;
+  white-space: nowrap;
+}
+
+.letter-a {
+  position: relative;
+  display: inline-block;
+}
+
+.eyeball {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background-color: $system-pink;
+  border-radius: 50%;
+  border: 3px solid $shadow-charcoal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: none;
+}
+
+.pupil {
+  width: 8px;
+  height: 8px;
+  background-color: $shadow-charcoal;
+  border-radius: 50%;
+}

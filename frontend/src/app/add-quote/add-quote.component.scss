@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+.add-quote h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-yellow);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 32rem;
+}
+
+.field {
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+:host button[mat-raised-button] {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.system-btn {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-pink) 92%, var(--color-shadow)) 0%,
+    color-mix(in srgb, var(--color-shadow) 70%, var(--color-pink)) 100%
+  ) !important;
+  color: var(--color-yellow) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-pink) 45%, transparent),
+    4px 4px 0 var(--color-shadow);
+}
+
+.error {
+  @include text-color-error;
+  margin: 0;
+  font-size: 0.875rem;
+}

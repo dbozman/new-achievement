@@ -11,28 +11,49 @@
 
   @if (quotes().length > 0) {
     <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Character</th>
-            <th>Quote</th>
-            <th>Book</th>
-            <th>Chapter</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (q of quotes(); track q.id) {
-            <tr>
-              <td>{{ q.id }}</td>
-              <td>{{ q.character }}</td>
-              <td class="text-cell">{{ q.text }}</td>
-              <td>{{ q.bookNumber }}</td>
-              <td>{{ q.chapterNumber }}</td>
-            </tr>
-          }
-        </tbody>
+      <table mat-table [dataSource]="quotes()" class="quotes-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let q">{{ q.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="character">
+          <th mat-header-cell *matHeaderCellDef>Character</th>
+          <td mat-cell *matCellDef="let q">{{ q.character }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="text">
+          <th mat-header-cell *matHeaderCellDef>Quote</th>
+          <td mat-cell *matCellDef="let q" class="text-cell">{{ q.text }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bookNumber">
+          <th mat-header-cell *matHeaderCellDef>Book</th>
+          <td mat-cell *matCellDef="let q">{{ q.bookNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="chapterNumber">
+          <th mat-header-cell *matHeaderCellDef>Chapter</th>
+          <td mat-cell *matCellDef="let q">{{ q.chapterNumber }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+    </div>
+
+    <div class="cards-grid">
+      @for (q of quotes(); track q.id) {
+        <mat-card class="quote-card">
+          <mat-card-header>
+            <mat-card-title>{{ q.character }}</mat-card-title>
+            <mat-card-subtitle>Book {{ q.bookNumber }}, Chapter {{ q.chapterNumber }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ q.text }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
     </div>
   }
 </section>

@@ -1,0 +1,83 @@
+@use 'variables' as *;
+
+.quote-list {
+  margin-block-end: 2rem;
+}
+
+.quote-list h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-yellow);
+}
+
+.error {
+  @include text-color-error;
+  margin: 0 0 1rem;
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-dark-wood) 65%, var(--color-shadow));
+  margin-bottom: 1rem;
+}
+
+.quotes-table {
+  width: 100%;
+  min-width: 680px;
+}
+
+.quotes-table .mat-mdc-header-row,
+.quotes-table .mat-mdc-row {
+  background: transparent;
+}
+
+.quotes-table .mat-mdc-header-cell {
+  font-weight: 600;
+  color: var(--color-yellow);
+  border-bottom-color: color-mix(in srgb, var(--color-pink) 40%, var(--color-dark-wood));
+}
+
+.quotes-table .mat-mdc-cell {
+  color: var(--color-text);
+  border-bottom-color: color-mix(in srgb, var(--color-pink) 22%, var(--color-dark-wood));
+}
+
+.text-cell {
+  max-width: 28rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+
+.quote-card {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--color-dark-wood) 92%, var(--color-shadow)),
+    color-mix(in srgb, var(--color-shadow) 88%, var(--color-dark-wood))
+  );
+  border: 2px solid color-mix(in srgb, var(--color-pink) 55%, var(--color-dark-wood));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-pink) 25%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-pink) 18%, transparent);
+}
+
+.quote-card :is(.mat-mdc-card-title, .mat-mdc-card-subtitle, p) {
+  color: var(--color-text);
+}
+
+.quote-card .mat-mdc-card-subtitle {
+  color: var(--color-text-muted);
+}

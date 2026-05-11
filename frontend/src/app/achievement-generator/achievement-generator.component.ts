@@ -1,17 +1,24 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
+import { Achievement } from '../achievement.model';
 import { AchievementService } from '../achievement.service';
 
 @Component({
   selector: 'app-achievement-generator',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './achievement-generator.component.html',
-  styleUrl: './achievement-generator.component.css',
+  styleUrl: './achievement-generator.component.scss',
 })
 export class AchievementGeneratorComponent {
   private readonly achievementService = inject(AchievementService);
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   private static nextDisplayId = 0;
 
   protected readonly trigger = new FormControl('', {
@@ -23,14 +30,28 @@ export class AchievementGeneratorComponent {
   protected readonly errorMessage = signal<string | null>(null);
 
   /** Each successful response gets a new id so the panel DOM is recreated and CSS animation replays. */
-  protected readonly display = signal<{ id: number; text: string } | null>(
-    null,
-  );
+  protected readonly display = signal<{
+    id: number;
+    achievement: Achievement;
+  } | null>(null);
 
   protected readonly displayRows = computed(() => {
     const d = this.display();
     return d ? [d] : [];
   });
+
+  protected readonly isDisplaying = computed(() => this.display() !== null);
+
+  constructor() {
+    effect(() => {
+      const active = this.isDisplaying();
+      this.document.body.classList.toggle('achievement-overlay-active', active);
+    });
+
+    this.destroyRef.onDestroy(() => {
+      this.document.body.classList.remove('achievement-overlay-active');
+    });
+  }
 
   protected generate(): void {
     const raw = this.trigger.value.trim();
@@ -45,9 +66,10 @@ export class AchievementGeneratorComponent {
     this.achievementService.generateAchievement(raw).subscribe({
       next: (res) => {
         this.loading.set(false);
+        this.trigger.reset('');
         this.display.set({
           id: ++AchievementGeneratorComponent.nextDisplayId,
-          text: res.achievement,
+          achievement: res,
         });
       },
       error: () => {
@@ -57,5 +79,9 @@ export class AchievementGeneratorComponent {
         );
       },
     });
+  }
+
+  protected dismiss(): void {
+    this.display.set(null);
   }
 }

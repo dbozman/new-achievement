@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuotesController = void 0;
 const common_1 = require("@nestjs/common");
+const create_quote_dto_1 = require("./dto/create-quote.dto");
 const quotes_service_1 = require("./quotes.service");
 let QuotesController = class QuotesController {
     quotesService;
@@ -51,7 +52,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [create_quote_dto_1.CreateQuoteDto]),
     __metadata("design:returntype", void 0)
 ], QuotesController.prototype, "createQuote", null);
 exports.QuotesController = QuotesController = __decorate([

@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { QuoteService } from '../quote.service';
+import { QuoteService } from '../../quote.service';
 
 @Component({
   selector: 'app-add-quote',

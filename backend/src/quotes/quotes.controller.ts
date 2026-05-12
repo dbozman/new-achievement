@@ -28,8 +28,8 @@ export class QuotesController {
     return quote;
   }
 
-  @Post()
-  createQuote(@Body() body: CreateQuoteDto) {
-    return this.quotesService.create(body);
-  }
+  // @Post()
+  // createQuote(@Body() body: CreateQuoteDto) {
+  //   return this.quotesService.create(body);
+  // }
 }

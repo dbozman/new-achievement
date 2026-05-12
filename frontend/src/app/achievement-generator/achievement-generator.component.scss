@@ -124,42 +124,48 @@
 }
 
 .achievement-label {
-  margin: 0 0 0.65rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.22em;
+  margin: 0 0 1rem; 
+  font-size: 1.15rem; 
+  letter-spacing: 0.25em; 
   font-weight: 700;
-  color: var(--color-yellow);
+  color: var(--color-pink);
+  
   text-shadow:
     0 0 12px color-mix(in srgb, var(--color-pink) 40%, transparent),
     2px 2px 0 var(--color-shadow);
 }
 
 .achievement-title {
-  margin: 0 0 0.75rem;
-  font-size: 1.35rem;
-  line-height: 1.3;
+  margin: 0 0 1rem;
+  font-size: 2.2rem; 
+  line-height: 1.2;
   font-weight: 700;
-  color: var(--color-yellow);
+  color: #ffffff;
+  
   text-shadow:
-    0 0 1px color-mix(in srgb, var(--color-yellow) 30%, transparent),
-    2px 2px 0 var(--color-shadow);
+    0 0 1px color-mix(in srgb, #ffffff 30%, transparent),
+    3px 3px 0 var(--color-shadow);
 }
 
 .achievement-description {
-  margin: 0 0 1rem;
-  font-size: 1.05rem;
-  line-height: 1.45;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem; 
+  line-height: 1.5;
   color: var(--color-text);
+  
+  border-bottom: 1px dashed var(--color-pink);
+  padding-bottom: 1.25rem; /* Space between text and the line */
+  
   text-shadow:
-    0 0 1px color-mix(in srgb, var(--color-yellow) 30%, transparent),
+    0 0 1px color-mix(in srgb, var(--color-text) 30%, transparent),
     0 0 14px color-mix(in srgb, var(--color-pink) 18%, transparent);
   white-space: pre-wrap;
 }
 
 .achievement-reward {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.45;
+  font-size: 1.1rem; 
+  line-height: 1.5;
   color: var(--color-text);
 }
 
@@ -167,10 +173,4 @@
   font-weight: 700;
   color: var(--color-pink);
   margin-inline-end: 0.35rem;
-}
-
-.actions {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: flex-end;
 }

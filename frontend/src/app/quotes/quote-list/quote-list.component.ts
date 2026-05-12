@@ -1,8 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 
-import { Quote, QuoteService } from '../quote.service';
+import { Quote, QuoteService } from '../../quote.service';
+
+export type QuoteListDisplayType = 'cards' | 'table';
 
 @Component({
   selector: 'app-quote-list',
@@ -12,6 +14,9 @@ import { Quote, QuoteService } from '../quote.service';
   styleUrl: './quote-list.component.scss',
 })
 export class QuoteListComponent implements OnInit {
+  /** How to render quotes when data is present. */
+  readonly displayType = input<QuoteListDisplayType>('cards');
+
   private readonly quoteService = inject(QuoteService);
   protected readonly displayedColumns = [
     'id',

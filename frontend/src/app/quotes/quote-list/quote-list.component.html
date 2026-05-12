@@ -9,7 +9,7 @@
     <p class="empty">No quotes yet. Add one below.</p>
   }
 
-  @if (quotes().length > 0) {
+  @if (quotes().length > 0 && displayType() === 'table') {
     <div class="table-wrap">
       <table mat-table [dataSource]="quotes()" class="quotes-table">
         <ng-container matColumnDef="id">
@@ -41,7 +41,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
+  }
 
+  @if (quotes().length > 0 && displayType() === 'cards') {
     <div class="cards-grid">
       @for (q of quotes(); track q.id) {
         <mat-card class="quote-card">

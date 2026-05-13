@@ -13,7 +13,10 @@ async function bootstrap() {
     }),
   );
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200',
+    'https://new-achievement-ui-production.up.railway.app/'],
+    methods: ['GET'],
+    credentials: true,
   });
   await app.listen(process.env.PORT ?? 3000);
 }

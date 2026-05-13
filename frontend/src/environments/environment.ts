@@ -4,5 +4,5 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'https://new-achievement-api-production.up.railway.app:8080',
+  apiUrl: 'https://new-achievement-api-production.up.railway.app',
 };

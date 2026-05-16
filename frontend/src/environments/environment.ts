@@ -4,5 +4,6 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'https://new-achievement-production.up.railway.app',
+  apiUrl: 'https://api.newachievement.ai'
+  //apiUrl: 'https://new-achievement-production.up.railway.app',
 };

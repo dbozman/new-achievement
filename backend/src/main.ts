@@ -8,9 +8,11 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:4200', 
-      'https://new-achievement-ui-production.up.railway.app'
+      'https://new-achievement-ui-production.up.railway.app',
+      'https://newachievement.ai',
+      'https://www.newachievement.ai'
     ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 

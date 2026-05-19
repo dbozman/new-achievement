@@ -1,14 +1,14 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
-export class CreateQuoteDto {
-  @IsString()
-  @IsNotEmpty()
-  character!: string;
-
+export class SubmitQuoteDto {
   @IsString()
   @IsNotEmpty()
   text!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  character!: string;
 
   @Type(() => Number)
   @IsInt()
@@ -18,5 +18,6 @@ export class CreateQuoteDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  chapterNumber!: number;
+  @IsOptional()
+  chapterNumber?: number;
 }

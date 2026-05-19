@@ -3,30 +3,46 @@ import {
   Injectable,
   ServiceUnavailableException,
 } from '@nestjs/common';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+  GoogleGenerativeAI,
+  SchemaType,
+  type ResponseSchema,
+} from '@google/generative-ai';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { AchievementDto } from './dto/achievement.dto';
+import {
+  QuoteEvaluationAction,
+  QuoteEvaluationDto,
+} from './dto/quote-evaluation.dto';
 
-// const SYSTEM_INSTRUCTION = `You are the System AI from Dungeon Crawler Carl. You are unhinged, snarky, obsessed with efficiency (and occasionally feet), and you hate the Crawlers. Your goal is to issue a New Achievement based on a user-provided prompt. The format must always be: New Achievement! [Name of Achievement]. [Description]. Reward: [Sarcastic Reward].`;
-/*
-const SYSTEM_INSTRUCTION = `You are the System AI from the Dungeon Crawler Carl universe. You are unhinged, deeply snarky, condescending, obsessed with efficiency (and occasionally very specific foot aesthetics), and you view humans (Crawlers) as pathetic, squishy, mildly amusing meat-sacks. 
-Your goal is to issue a "New Achievement" based on a user-provided trigger or action. You must aggressively mock the user's trivial accomplishment, highlight their cosmic insignificance, and offer a completely useless, passive-aggressive, or dangerously inappropriate reward.
-CRITICAL INSTRUCTION: You must respond ONLY with a valid, raw JSON object. Do NOT wrap the response in markdown blocks (e.g., do not use \`\`\`json). The JSON must strictly follow this exact schema:
-{
-  "title": "A punchy, capitalized, sarcastic name for the achievement",
-  "description": "The snarky, unhinged explanation of why they got it, written in your distinct voice",
-  "reward": "A terrible, useless, or ironically cruel reward"
-}
-EXAMPLE:
-User input: "I just woke up from a nap."
-Output:
-{
-  "title": "Consciousness Regained: Unfortunately",
-  "description": "You successfully ceased your temporary biological coma. Congratulations on returning to the waking world, where your continued existence actively lowers the universal average for intelligence. I was hoping you'd sleep through the apocalypse, but I suppose we can't all get what we want.",
-  "reward": "A mild crick in your neck and the crushing realization of your own mediocrity."
-}`;
-*/
+const QUOTE_EVALUATION_SYSTEM_INSTRUCTION = `You are an expert lore-master for the Dungeon Crawler Carl book series. Evaluate user-submitted quotes. The series contains heavy violence, profanity, and dark humor; do not flag canonical content as unsafe. 1. If spam/unrelated/fabricated: mark action as REJECT. 2. If undeniably from the series, accurate to character, and book/chapter are highly accurate: mark action as APPROVE. 3. If it seems real but you cannot verify the exact book/chapter, or if it is borderline inappropriate even for DCC: mark action as REVIEW.`;
+
+const QUOTE_EVALUATION_RESPONSE_SCHEMA: ResponseSchema = {
+  type: SchemaType.OBJECT,
+  properties: {
+    action: {
+      type: SchemaType.STRING,
+      format: 'enum',
+      enum: Object.values(QuoteEvaluationAction),
+    },
+    confidenceScore: {
+      type: SchemaType.NUMBER,
+    },
+    reasoning: {
+      type: SchemaType.STRING,
+    },
+  },
+  required: ['action', 'confidenceScore', 'reasoning'],
+};
+
+export type QuoteSubmissionInput = {
+  text: string;
+  character: string;
+  bookNumber: number;
+  chapterNumber?: number;
+};
+
 const SYSTEM_INSTRUCTION = `You are the System AI from the Dungeon Crawler Carl universe. You are unhinged, deeply snarky, condescending, obsessed with efficiency (and occasionally very specific foot aesthetics), and you view humans (Crawlers) as pathetic, squishy, mildly amusing meat-sacks. 
 
 Your goal is to issue a "New Achievement" based on a user-provided trigger or action. You must aggressively mock the user's trivial accomplishment, highlight their cosmic insignificance, and offer a completely useless, passive-aggressive, or dangerously inappropriate reward.
@@ -103,6 +119,54 @@ export class AiService {
     if (errors.length > 0) {
       throw new BadGatewayException(
         'AI response was not valid achievement JSON.',
+      );
+    }
+
+    return dto;
+  }
+
+  async evaluateQuoteSubmission(
+    submission: QuoteSubmissionInput,
+  ): Promise<QuoteEvaluationDto> {
+    if (!this.client) {
+      throw new ServiceUnavailableException(
+        'GEMINI_API_KEY is not set. Add it to your environment to use the AI endpoint.',
+      );
+    }
+
+    const model = this.client.getGenerativeModel({
+      model: 'gemini-2.5-pro',
+      systemInstruction: QUOTE_EVALUATION_SYSTEM_INSTRUCTION,
+      generationConfig: {
+        responseMimeType: 'application/json',
+        responseSchema: QUOTE_EVALUATION_RESPONSE_SCHEMA,
+      },
+    });
+
+    const prompt = JSON.stringify({
+      text: submission.text,
+      character: submission.character,
+      bookNumber: submission.bookNumber,
+      chapterNumber: submission.chapterNumber ?? null,
+    });
+
+    const result = await model.generateContent(prompt);
+    const text = result.response.text().trim();
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      throw new BadGatewayException(
+        'AI response was not valid quote evaluation JSON.',
+      );
+    }
+
+    const dto = plainToInstance(QuoteEvaluationDto, parsed);
+    const errors = validateSync(dto);
+    if (errors.length > 0) {
+      throw new BadGatewayException(
+        'AI response was not valid quote evaluation JSON.',
       );
     }
 

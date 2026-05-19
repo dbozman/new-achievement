@@ -27,7 +27,10 @@ export class AddQuoteComponent {
     character: ['', Validators.required],
     text: ['', Validators.required],
     bookNumber: [1, [Validators.required, Validators.min(1)]],
-    chapterNumber: [1, [Validators.required, Validators.min(1)]],
+    chapterNumber: [
+      undefined as number | undefined,
+      Validators.min(1),
+    ],
   });
 
   protected submitError = false;
@@ -39,13 +42,24 @@ export class AddQuoteComponent {
       return;
     }
 
-    this.quoteService.create(this.form.getRawValue()).subscribe({
+    const { character, text, bookNumber, chapterNumber } =
+      this.form.getRawValue();
+    const payload = {
+      character,
+      text,
+      bookNumber,
+      ...(chapterNumber != null && chapterNumber > 0
+        ? { chapterNumber }
+        : {}),
+    };
+
+    this.quoteService.create(payload).subscribe({
       next: () => {
         this.form.reset({
           character: '',
           text: '',
           bookNumber: 1,
-          chapterNumber: 1,
+          chapterNumber: undefined,
         });
         this.quoteAdded.emit();
       },

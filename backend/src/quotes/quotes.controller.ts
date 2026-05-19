@@ -8,6 +8,7 @@ import {
 import { AiService } from '../ai/ai.service';
 import { SubmitQuoteDto } from './dto/submit-quote.dto';
 import { SubmitQuoteResponse } from './dto/submit-quote-response.dto';
+import { QUOTE_FORM_OPTIONS } from './quotes.config';
 import { QuotesService } from './quotes.service';
 
 @Controller('quotes')
@@ -20,6 +21,11 @@ export class QuotesController {
   @Get()
   getAllQuotes() {
     return this.quotesService.findAll();
+  }
+
+  @Get('form-options')
+  getFormOptions() {
+    return QUOTE_FORM_OPTIONS;
   }
 
   @Get('random')

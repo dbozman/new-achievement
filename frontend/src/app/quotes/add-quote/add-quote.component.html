@@ -1,40 +1,112 @@
 <section class="add-quote">
-  <h2>Add a quote</h2>
+  <h2>Submit a quote</h2>
+  <p class="intro">
+    The System will evaluate your submission. Canon gets messy — violence and profanity are expected.
+  </p>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline" class="field">
-      <mat-label>Character</mat-label>
-      <input matInput type="text" formControlName="character" autocomplete="off" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="field">
-      <mat-label>Quote</mat-label>
-      <textarea matInput formControlName="text" rows="4"></textarea>
-    </mat-form-field>
-
-    <div class="row">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Book #</mat-label>
-        <input matInput type="number" formControlName="bookNumber" min="1" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Chapter # (optional)</mat-label>
-        <input matInput type="number" formControlName="chapterNumber" min="1" />
-      </mat-form-field>
+  @if (optionsLoading()) {
+    <div class="options-loading" aria-busy="true">
+      <mat-spinner diameter="36" />
+      <span>Loading form options…</span>
     </div>
+  }
 
-    @if (submitError) {
-      <p class="error" role="alert">Could not save quote. Try again.</p>
-    }
+  @if (optionsError()) {
+    <p class="feedback error" role="alert">
+      Could not load characters and books. Is the API running?
+    </p>
+  }
 
-    <button
-      mat-raised-button
-      type="submit"
-      color="warn"
-      class="system-btn"
-      [disabled]="form.invalid"
-    >
-      Add quote
-    </button>
-  </form>
+  @if (!optionsLoading() && !optionsError()) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="quote-form">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Character</mat-label>
+        <mat-select formControlName="character" required>
+          @for (name of characters(); track name) {
+            <mat-option [value]="name">{{ name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.controls.character.touched && form.controls.character.invalid) {
+          <mat-error>Select a character</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Quote</mat-label>
+        <textarea
+          matInput
+          formControlName="text"
+          rows="5"
+          placeholder="Paste or type the quote…"
+        ></textarea>
+        @if (form.controls.text.touched && form.controls.text.invalid) {
+          <mat-error>Quote text is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Book</mat-label>
+          <mat-select formControlName="bookNumber" required>
+            @for (book of books(); track book.id) {
+              <mat-option [value]="book.id">{{ book.title }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.bookNumber.touched && form.controls.bookNumber.invalid) {
+            <mat-error>Select a book</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Chapter</mat-label>
+          <mat-select formControlName="chapterNumber" required>
+            @for (chapter of chapterOptions(); track chapter) {
+              <mat-option [value]="chapter">Chapter {{ chapter }}</mat-option>
+            }
+          </mat-select>
+          @if (
+            form.controls.chapterNumber.touched && form.controls.chapterNumber.invalid
+          ) {
+            <mat-error>Select a chapter</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      @if (submitError()) {
+        <p class="feedback error" role="alert">
+          Submission failed. Check your connection and try again.
+        </p>
+      }
+
+      @if (successResult(); as result) {
+        <div
+          class="feedback success"
+          [class.status-approved]="result.quote.status === 'APPROVED'"
+          [class.status-rejected]="result.quote.status === 'REJECTED'"
+          [class.status-review]="result.quote.status === 'REVIEW'"
+          role="status"
+        >
+          <p class="success-title">
+            Evaluation: {{ statusLabel(result.quote.status) }}
+          </p>
+          <p class="success-reasoning">{{ result.reasoning }}</p>
+        </div>
+      }
+
+      <button
+        mat-raised-button
+        type="submit"
+        color="warn"
+        class="system-btn"
+        [disabled]="form.invalid || submitting()"
+      >
+        @if (submitting()) {
+          <mat-spinner diameter="20" class="btn-spinner" />
+          <span>Evaluating…</span>
+        } @else {
+          Submit quote
+        }
+      </button>
+    </form>
+  }
 </section>

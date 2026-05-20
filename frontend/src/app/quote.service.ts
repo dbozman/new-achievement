@@ -27,6 +27,17 @@ export interface SubmitQuoteResponse {
   reasoning: string;
 }
 
+export interface QuoteFormBookOption {
+  id: number;
+  title: string;
+  maxChapters: number;
+}
+
+export interface QuoteFormOptions {
+  characters: string[];
+  books: QuoteFormBookOption[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +51,10 @@ export class QuoteService {
 
   getRandom(): Observable<Quote> {
     return this.http.get<Quote>(`${this.baseUrl}/random`);
+  }
+
+  getFormOptions(): Observable<QuoteFormOptions> {
+    return this.http.get<QuoteFormOptions>(`${this.baseUrl}/form-options`);
   }
 
   create(payload: CreateQuotePayload): Observable<SubmitQuoteResponse> {

@@ -5,16 +5,27 @@ import {
   NotFoundException,
   Post,
 } from '@nestjs/common';
-import { CreateQuoteDto } from './dto/create-quote.dto';
+import { AiService } from '../ai/ai.service';
+import { SubmitQuoteDto } from './dto/submit-quote.dto';
+import { SubmitQuoteResponse } from './dto/submit-quote-response.dto';
+import { QUOTE_FORM_OPTIONS } from './quotes.config';
 import { QuotesService } from './quotes.service';
 
 @Controller('quotes')
 export class QuotesController {
-  constructor(private readonly quotesService: QuotesService) {}
+  constructor(
+    private readonly quotesService: QuotesService,
+    private readonly aiService: AiService,
+  ) {}
 
   @Get()
   getAllQuotes() {
     return this.quotesService.findAll();
+  }
+
+  @Get('form-options')
+  getFormOptions() {
+    return QUOTE_FORM_OPTIONS;
   }
 
   @Get('random')
@@ -28,8 +39,30 @@ export class QuotesController {
     return quote;
   }
 
-  // @Post()
-  // createQuote(@Body() body: CreateQuoteDto) {
-  //   return this.quotesService.create(body);
-  // }
+  @Post()
+  async submitQuote(@Body() body: SubmitQuoteDto): Promise<SubmitQuoteResponse> {
+    const pending = await this.quotesService.createPending({
+      text: body.text,
+      character: body.character,
+      bookNumber: body.bookNumber,
+      chapterNumber: body.chapterNumber,
+    });
+
+    const evaluation = await this.aiService.evaluateQuoteSubmission({
+      text: body.text,
+      character: body.character,
+      bookNumber: body.bookNumber,
+      chapterNumber: body.chapterNumber,
+    });
+
+    const status = QuotesService.mapEvaluationActionToStatus(
+      evaluation.action,
+    );
+    const quote = await this.quotesService.updateStatus(pending.id, status);
+
+    return {
+      quote,
+      reasoning: evaluation.reasoning,
+    };
+  }
 }

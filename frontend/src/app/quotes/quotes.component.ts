@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { AddQuoteComponent } from './add-quote/add-quote.component';
 import { QuoteListComponent } from './quote-list/quote-list.component';
 
